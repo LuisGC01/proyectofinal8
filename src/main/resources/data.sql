@@ -1,5 +1,3 @@
-
-
 /*
      INSERT’s para la tabla usuario.
      @author   Luis Angel Garcia Cervantes

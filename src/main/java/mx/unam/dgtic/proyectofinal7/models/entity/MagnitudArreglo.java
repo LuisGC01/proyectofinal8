@@ -1,4 +1,4 @@
-package mx.unam.proyectoFinal.service.dto;
+package mx.unam.dgtic.proyectofinal7.models.entity;
 
 public class MagnitudArreglo {
 	private Integer idMagnitudArreglo;

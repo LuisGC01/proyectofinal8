@@ -1,13 +1,48 @@
-package mx.unam.proyectoFinal.service.dto;
+package mx.unam.dgtic.proyectofinal7.models.entity;
 
-public class Usuario {
+import java.io.Serializable;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "usuario")
+public class Usuario implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_usuario")
 	private Integer idUsuario;
+
+	@Column(name = "usu_nombre_usuario")
 	private String nombreUsuario;
+
+	@Column(name = "usu_password")
 	private String password;
+
+	@Column(name = "usu_puesto")
 	private String puesto;
+
+	@Column(name = "usu_nombre")
 	private String nombre;
+
+	@Column(name = "usu_primer_apellido")
 	private String primerApellido;
+
+	@Column(name = "usu_segundo_apellido")
 	private String segundoApellido;
+
+	@Column(name = "usu_activo")
 	private Boolean activo;
 
 	public Usuario() {
@@ -99,6 +134,30 @@ public class Usuario {
 
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idUsuario);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		return Objects.equals(idUsuario, other.idUsuario);
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", password=" + password
+				+ ", puesto=" + puesto + ", nombre=" + nombre + ", primerApellido=" + primerApellido
+				+ ", segundoApellido=" + segundoApellido + ", activo=" + activo + "]";
 	}
 
 }

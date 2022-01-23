@@ -1,4 +1,4 @@
-/*DROP TABLE IF EXISTS secuencia_detalle;
+DROP TABLE IF EXISTS secuencia_detalle;
 DROP TABLE IF EXISTS magnitud_detalle;
 DROP TABLE IF EXISTS magnitud_arreglo;
 DROP TABLE IF EXISTS secuencia_medicion;
@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS derivada_modelo_matematico;
 DROP TABLE IF EXISTS modelo_matematico;
 DROP TABLE IF EXISTS arreglo_medicion;
 DROP TABLE IF EXISTS imagen;
-DROP TABLE IF EXISTS usuario;*/
+DROP TABLE IF EXISTS usuario;
 
 /*
      Tabla que contiene la información de los usuarios del sistema.

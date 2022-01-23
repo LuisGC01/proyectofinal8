@@ -37,7 +37,7 @@ public class Proyectofinal7Application {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setDataSource(dataSource);
 		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-		entityManagerFactoryBean.setPackagesToScan("mx.unam.dgtic.practica2");
+		entityManagerFactoryBean.setPackagesToScan("mx.unam.dgtic.proyectofinal7");
 
 		Properties jpaProperties = new Properties();
 		// jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");

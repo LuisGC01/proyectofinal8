@@ -1,4 +1,4 @@
-package mx.unam.proyectoFinal.service.dto;
+package mx.unam.dgtic.proyectofinal7.models.entity;
 
 import java.time.LocalDateTime;
 
