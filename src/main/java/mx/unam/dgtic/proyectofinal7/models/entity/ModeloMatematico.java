@@ -1,19 +1,83 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
+import java.io.Serializable;
+import java.util.Set;
 
-public class ModeloMatematico {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "modelo_matematico")
+public class ModeloMatematico implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4338566749380577556L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_modelo_matematico")
 	private Integer idModeloMatematico;
+
+	@Column(name = "mod_mat_ecuacion")
 	private String ecuacion;
-	private Integer idArregloMedicion;
+
+	@OneToOne(targetEntity = ArregloMedicion.class, fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "id_arreglo_medicion", nullable = false)
+	@Fetch(FetchMode.JOIN)
+	@JsonIgnore
+	private ArregloMedicion arregloMedicion;
+
+	@OneToMany(mappedBy = "modeloMatematico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
+	private Set<DerivadaModeloMatematico> derivadasModeloMatematico;
+
+	@OneToMany(mappedBy = "modeloMatematico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
+	private Set<MagnitudArreglo> magnitudesArreglo;
 
 	public ModeloMatematico() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ModeloMatematico(Integer idModeloMatematico, String ecuacion, Integer idArregloMedicion) {
+	public ModeloMatematico(String ecuacion) {
+		this.ecuacion = ecuacion;
+	}
+
+	public ModeloMatematico(Integer idModeloMatematico, String ecuacion, ArregloMedicion arregloMedicion,
+			Set<DerivadaModeloMatematico> derivadasModeloMatematico, Set<MagnitudArreglo> magnitudesArreglo) {
 		this.idModeloMatematico = idModeloMatematico;
 		this.ecuacion = ecuacion;
-		this.idArregloMedicion = idArregloMedicion;
+		this.arregloMedicion = arregloMedicion;
+		this.derivadasModeloMatematico = derivadasModeloMatematico;
+		this.magnitudesArreglo = magnitudesArreglo;
+	}
+
+	public ModeloMatematico(String ecuacion, ArregloMedicion arregloMedicion,
+			Set<DerivadaModeloMatematico> derivadasModeloMatematico, Set<MagnitudArreglo> magnitudesArreglo) {
+		this.ecuacion = ecuacion;
+		this.arregloMedicion = arregloMedicion;
+		this.derivadasModeloMatematico = derivadasModeloMatematico;
+		this.magnitudesArreglo = magnitudesArreglo;
+	}
+
+	public ModeloMatematico(Integer idModeloMatematico, String ecuacion) {
+		this.idModeloMatematico = idModeloMatematico;
+		this.ecuacion = ecuacion;
 	}
 
 	public Integer getIdModeloMatematico() {
@@ -32,17 +96,28 @@ public class ModeloMatematico {
 		this.ecuacion = ecuacion;
 	}
 
-	public Integer getIdArregloMedicion() {
-		return idArregloMedicion;
+	public ArregloMedicion getArregloMedicion() {
+		return arregloMedicion;
 	}
 
-	public void setIdArregloMedicion(Integer idArregloMedicion) {
-		this.idArregloMedicion = idArregloMedicion;
+	public void setArregloMedicion(ArregloMedicion arregloMedicion) {
+		this.arregloMedicion = arregloMedicion;
 	}
 
-	@Override
-	public String toString() {
-		return "ModeloMatematico [idModeloMatematico=" + idModeloMatematico + ", ecuacion=" + ecuacion + "]";
+	public Set<DerivadaModeloMatematico> getDerivadasModeloMatematico() {
+		return derivadasModeloMatematico;
+	}
+
+	public void setDerivadasModeloMatematico(Set<DerivadaModeloMatematico> derivadasModeloMatematico) {
+		this.derivadasModeloMatematico = derivadasModeloMatematico;
+	}
+
+	public Set<MagnitudArreglo> getMagnitudesArreglo() {
+		return magnitudesArreglo;
+	}
+
+	public void setMagnitudesArreglo(Set<MagnitudArreglo> magnitudesArreglo) {
+		this.magnitudesArreglo = magnitudesArreglo;
 	}
 
 }

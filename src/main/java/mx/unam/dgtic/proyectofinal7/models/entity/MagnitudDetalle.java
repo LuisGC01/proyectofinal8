@@ -1,23 +1,72 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
-public class MagnitudDetalle {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "magnitud_detalle")
+public class MagnitudDetalle implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3310351252038668929L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_magnitud_detalle")
 	private Integer idMagnitudDetalle;
+
+	@Column(name = "mag_det_tipo")
 	private String tipo;
+
+	@Column(name = "mag_det_descripcion")
 	private String descripcion;
+
+	@Column(name = "mag_det_distribucion")
 	private String distribucion;
+
+	@Column(name = "mag_det_evaluacion_incertidumbre")
 	private String evaluacionIncertidumbre;
+
+	@Column(name = "mag_det_metodo_observacion")
 	private String metodoObservacion;
+
+	@Column(name = "mag_det_valor")
 	private Double valor;
-	private Integer idMagnitudArreglo;
-	private Integer idImagen;
+
+	@OneToOne(targetEntity = Imagen.class, fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "id_imagen", nullable = false)
+	@Fetch(FetchMode.JOIN)
+	private Imagen imagen;
+
+	@OneToOne(targetEntity = MagnitudArreglo.class, fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "id_magnitud_arreglo", nullable = false)
+	@Fetch(FetchMode.JOIN)
+	@JsonIgnore
+	private MagnitudArreglo magnitudArreglo;
 
 	public MagnitudDetalle() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public MagnitudDetalle(Integer idMagnitudDetalle, String tipo, String descripcion, String distribucion,
-			String evaluacionIncertidumbre, String metodoObservacion, Double valor, Integer idMagnitudArreglo,
-			Integer idImagen) {
+			String evaluacionIncertidumbre, String metodoObservacion, Double valor, Imagen imagen,
+			MagnitudArreglo magnitudArreglo) {
 		this.idMagnitudDetalle = idMagnitudDetalle;
 		this.tipo = tipo;
 		this.descripcion = descripcion;
@@ -25,8 +74,41 @@ public class MagnitudDetalle {
 		this.evaluacionIncertidumbre = evaluacionIncertidumbre;
 		this.metodoObservacion = metodoObservacion;
 		this.valor = valor;
-		this.idMagnitudArreglo = idMagnitudArreglo;
-		this.idImagen = idImagen;
+		this.imagen = imagen;
+		this.magnitudArreglo = magnitudArreglo;
+	}
+
+	public MagnitudDetalle(String tipo, String descripcion, String distribucion, String evaluacionIncertidumbre,
+			String metodoObservacion, Double valor) {
+		this.tipo = tipo;
+		this.descripcion = descripcion;
+		this.distribucion = distribucion;
+		this.evaluacionIncertidumbre = evaluacionIncertidumbre;
+		this.metodoObservacion = metodoObservacion;
+		this.valor = valor;
+	}
+
+	public MagnitudDetalle(String tipo, String descripcion, String distribucion, String evaluacionIncertidumbre,
+			String metodoObservacion, Double valor, Imagen imagen, MagnitudArreglo magnitudArreglo) {
+		this.tipo = tipo;
+		this.descripcion = descripcion;
+		this.distribucion = distribucion;
+		this.evaluacionIncertidumbre = evaluacionIncertidumbre;
+		this.metodoObservacion = metodoObservacion;
+		this.valor = valor;
+		this.imagen = imagen;
+		this.magnitudArreglo = magnitudArreglo;
+	}
+
+	public MagnitudDetalle(Integer idMagnitudDetalle, String tipo, String descripcion, String distribucion,
+			String evaluacionIncertidumbre, String metodoObservacion, Double valor) {
+		this.idMagnitudDetalle = idMagnitudDetalle;
+		this.tipo = tipo;
+		this.descripcion = descripcion;
+		this.distribucion = distribucion;
+		this.evaluacionIncertidumbre = evaluacionIncertidumbre;
+		this.metodoObservacion = metodoObservacion;
+		this.valor = valor;
 	}
 
 	public Integer getIdMagnitudDetalle() {
@@ -85,27 +167,20 @@ public class MagnitudDetalle {
 		this.valor = valor;
 	}
 
-	public Integer getIdMagnitudArreglo() {
-		return idMagnitudArreglo;
+	public Imagen getImagen() {
+		return imagen;
 	}
 
-	public void setIdMagnitudArreglo(Integer idMagnitudArreglo) {
-		this.idMagnitudArreglo = idMagnitudArreglo;
+	public void setImagen(Imagen imagen) {
+		this.imagen = imagen;
 	}
 
-	public Integer getIdImagen() {
-		return idImagen;
+	public MagnitudArreglo getMagnitudArreglo() {
+		return magnitudArreglo;
 	}
 
-	public void setIdImagen(Integer idImagen) {
-		this.idImagen = idImagen;
-	}
-
-	@Override
-	public String toString() {
-		return "MagnitudDetalle [idMagnitudDetalle=" + idMagnitudDetalle + ", tipo=" + tipo + ", descripcion="
-				+ descripcion + ", distribucion=" + distribucion + ", evaluacionIncertidumbre="
-				+ evaluacionIncertidumbre + ", metodoObservacion=" + metodoObservacion + ", valor=" + valor + "]";
+	public void setMagnitudArreglo(MagnitudArreglo magnitudArreglo) {
+		this.magnitudArreglo = magnitudArreglo;
 	}
 
 }

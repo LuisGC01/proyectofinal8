@@ -1,21 +1,75 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
-public class DerivadaModeloMatematico {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "derivada_modelo_matematico")
+public class DerivadaModeloMatematico implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4779623904093553866L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_derivada_modelo_matematico")
 	private Integer idDerivadaModeloMatematico;
+
+	@Column(name = "der_mod_mat_derivada_parcial")
 	private String derivadaParcial;
+
+	@Column(name = "der_mod_mat_respecto_a")
 	private String respectoA;
-	private Integer idModeloMatematico;
+
+	@ManyToOne(targetEntity = ModeloMatematico.class, fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "id_modelo_matematico",nullable = false)
+	@Fetch(FetchMode.JOIN)
+	@JsonIgnore
+	private ModeloMatematico modeloMatematico;
 
 	public DerivadaModeloMatematico() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public DerivadaModeloMatematico(Integer idDerivadaModeloMatematico, String derivadaParcial, String respectoA,
-			Integer idModeloMatematico) {
+			ModeloMatematico modeloMatematico) {
 		this.idDerivadaModeloMatematico = idDerivadaModeloMatematico;
 		this.derivadaParcial = derivadaParcial;
 		this.respectoA = respectoA;
-		this.idModeloMatematico = idModeloMatematico;
+		this.modeloMatematico = modeloMatematico;
+	}
+
+	public DerivadaModeloMatematico(String derivadaParcial, String respectoA) {
+		this.derivadaParcial = derivadaParcial;
+		this.respectoA = respectoA;
+	}
+
+	public DerivadaModeloMatematico(String derivadaParcial, String respectoA, ModeloMatematico modeloMatematico) {
+		this.derivadaParcial = derivadaParcial;
+		this.respectoA = respectoA;
+		this.modeloMatematico = modeloMatematico;
+	}
+
+	public DerivadaModeloMatematico(Integer idDerivadaModeloMatematico, String derivadaParcial, String respectoA) {
+		this.idDerivadaModeloMatematico = idDerivadaModeloMatematico;
+		this.derivadaParcial = derivadaParcial;
+		this.respectoA = respectoA;
 	}
 
 	public Integer getIdDerivadaModeloMatematico() {
@@ -42,19 +96,14 @@ public class DerivadaModeloMatematico {
 		this.respectoA = respectoA;
 	}
 
-	public Integer getIdModeloMatematico() {
-		return idModeloMatematico;
+	public ModeloMatematico getModeloMatematico() {
+		return modeloMatematico;
 	}
 
-	public void setIdModeloMatematico(Integer idModeloMatematico) {
-		this.idModeloMatematico = idModeloMatematico;
+	public void setModeloMatematico(ModeloMatematico modeloMatematico) {
+		this.modeloMatematico = modeloMatematico;
 	}
 
-	@Override
-	public String toString() {
-		return "DerivadaModeloMatematico [idDerivadaModeloMatematico=" + idDerivadaModeloMatematico
-				+ ", derivadaParcial=" + derivadaParcial + ", respectoA=" + respectoA + "]";
-	}
-
+	
 	
 }

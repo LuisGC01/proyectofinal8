@@ -1,23 +1,31 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable{
 
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2017067021225263600L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +52,13 @@ public class Usuario implements Serializable{
 
 	@Column(name = "usu_activo")
 	private Boolean activo;
+	
+	@OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
+	private List<ArregloMedicion> arreglosMedicion;
+	//private List<SecuenciaMedicion> secuenciasMedicion;
+	
+	
 
 	public Usuario() {
 		// TODO Auto-generated constructor stub

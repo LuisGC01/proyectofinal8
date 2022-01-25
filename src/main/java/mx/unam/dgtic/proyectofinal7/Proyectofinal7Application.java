@@ -19,12 +19,13 @@ public class Proyectofinal7Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Proyectofinal7Application.class, args);
 	}
+
 	@Bean
 	public DataSource dataSource() {
 		// conectividad con el servidor de base de datos
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.mariadb.jdbc.Driver"); // com.mysql.jdbc.Driver
-		dataSource.setUrl("jdbc:mariadb://192.168.0.5:3307/proyecto_final");
+		dataSource.setUrl("jdbc:mariadb://192.168.0.4:3307/proyecto_final");
 		dataSource.setUsername("root");
 		dataSource.setPassword("Holacomo2");
 		return dataSource;
