@@ -37,26 +37,30 @@ public class ArregloController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void insertarArreglo(ArregloMedicion entity) {
-		arregloService.save(entity);
+	public ArregloMedicion insertarArreglo(@RequestBody ArregloMedicion entity) {
+		return arregloService.insertarArreglo(entity);
+		//arregloService.save(entity);
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void actualizarArreglo(@PathVariable Integer id, @RequestBody ArregloMedicion entity) {
 		Optional<ArregloMedicion> o = arregloService.findById(id);
+		
 		if (o.isPresent()) {
-			ArregloMedicion a = entity;
-			a.setIdArregloMedicion(id);
-			arregloService.save(a);
+			ArregloMedicion arregloMedicion = entity;
+			arregloMedicion.setIdArregloMedicion(id);
+			arregloService.actualizarArreglo(arregloMedicion);
 		}
+		
+		//entity.setIdArregloMedicion(id);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ArregloMedicion> eliminarArregloPorId(@PathVariable Integer id) {
 		Optional<ArregloMedicion> o = arregloService.findById(id);
 		if (o.isPresent()) {
-			arregloService.deleteById(id);
+			arregloService.eliminarArregloPorId(id);
 			return new ResponseEntity<ArregloMedicion>(HttpStatus.OK);
 		} else {
 			return new ResponseEntity<ArregloMedicion>(HttpStatus.NOT_FOUND);

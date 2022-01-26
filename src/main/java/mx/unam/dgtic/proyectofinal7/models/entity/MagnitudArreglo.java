@@ -51,13 +51,13 @@ public class MagnitudArreglo implements Serializable {
 	@Column(name = "mag_arr_asociado")
 	private String asociado;
 
-	@ManyToOne(targetEntity = ModeloMatematico.class, fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "id_modelo_matematico", nullable = false)
-	@Fetch(FetchMode.JOIN)
+	@ManyToOne
+	@JoinColumn(name = "id_modelo_matematico")
+	//@Fetch(FetchMode.JOIN)
 	@JsonIgnore
 	private ModeloMatematico modeloMatematico;
 
-	@OneToOne(mappedBy = "magnitudArreglo", cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
+	@OneToOne(mappedBy = "magnitudArreglo")
 	private MagnitudDetalle magnitudDetalle;
 
 	public MagnitudArreglo() {
@@ -109,6 +109,29 @@ public class MagnitudArreglo implements Serializable {
 		this.capturar = capturar;
 		this.repetir = repetir;
 		this.asociado = asociado;
+	}
+
+	public MagnitudArreglo(String magnitud, String unidad, String definicion, Boolean capturar, Boolean repetir,
+			String asociado, ModeloMatematico modeloMatematico) {
+		this.magnitud = magnitud;
+		this.unidad = unidad;
+		this.definicion = definicion;
+		this.capturar = capturar;
+		this.repetir = repetir;
+		this.asociado = asociado;
+		this.modeloMatematico = modeloMatematico;
+	}
+
+	public MagnitudArreglo(Integer idMagnitudArreglo, String magnitud, String unidad, String definicion,
+			Boolean capturar, Boolean repetir, String asociado, ModeloMatematico modeloMatematico) {
+		this.idMagnitudArreglo = idMagnitudArreglo;
+		this.magnitud = magnitud;
+		this.unidad = unidad;
+		this.definicion = definicion;
+		this.capturar = capturar;
+		this.repetir = repetir;
+		this.asociado = asociado;
+		this.modeloMatematico = modeloMatematico;
 	}
 
 	public Integer getIdMagnitudArreglo() {

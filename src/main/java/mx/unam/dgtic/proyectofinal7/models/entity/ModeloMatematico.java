@@ -36,18 +36,18 @@ public class ModeloMatematico implements Serializable {
 	@Column(name = "mod_mat_ecuacion")
 	private String ecuacion;
 
-	@OneToOne(targetEntity = ArregloMedicion.class, fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "id_arreglo_medicion", nullable = false)
-	@Fetch(FetchMode.JOIN)
+	@OneToOne
+	@JoinColumn(name = "id_arreglo_medicion")
+	//@Fetch(FetchMode.JOIN)
 	@JsonIgnore
 	private ArregloMedicion arregloMedicion;
 
-	@OneToMany(mappedBy = "modeloMatematico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@Fetch(FetchMode.JOIN)
+	@OneToMany(mappedBy = "modeloMatematico")
+	//@Fetch(FetchMode.JOIN)
 	private Set<DerivadaModeloMatematico> derivadasModeloMatematico;
 
-	@OneToMany(mappedBy = "modeloMatematico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@Fetch(FetchMode.JOIN)
+	@OneToMany(mappedBy = "modeloMatematico")
+	//@Fetch(FetchMode.JOIN)
 	private Set<MagnitudArreglo> magnitudesArreglo;
 
 	public ModeloMatematico() {
@@ -78,6 +78,17 @@ public class ModeloMatematico implements Serializable {
 	public ModeloMatematico(Integer idModeloMatematico, String ecuacion) {
 		this.idModeloMatematico = idModeloMatematico;
 		this.ecuacion = ecuacion;
+	}
+
+	public ModeloMatematico(String ecuacion, ArregloMedicion arregloMedicion) {
+		this.ecuacion = ecuacion;
+		this.arregloMedicion = arregloMedicion;
+	}
+
+	public ModeloMatematico(Integer idModeloMatematico, String ecuacion, ArregloMedicion arregloMedicion) {
+		this.idModeloMatematico = idModeloMatematico;
+		this.ecuacion = ecuacion;
+		this.arregloMedicion = arregloMedicion;
 	}
 
 	public Integer getIdModeloMatematico() {

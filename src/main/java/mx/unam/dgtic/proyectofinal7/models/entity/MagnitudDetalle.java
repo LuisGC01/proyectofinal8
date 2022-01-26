@@ -49,14 +49,14 @@ public class MagnitudDetalle implements Serializable {
 	@Column(name = "mag_det_valor")
 	private Double valor;
 
-	@OneToOne(targetEntity = Imagen.class, fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "id_imagen", nullable = false)
-	@Fetch(FetchMode.JOIN)
+	@OneToOne
+	@JoinColumn(name = "id_imagen")
+	//@Fetch(FetchMode.JOIN)
 	private Imagen imagen;
 
-	@OneToOne(targetEntity = MagnitudArreglo.class, fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "id_magnitud_arreglo", nullable = false)
-	@Fetch(FetchMode.JOIN)
+	@OneToOne
+	@JoinColumn(name = "id_magnitud_arreglo")
+	//@Fetch(FetchMode.JOIN)
 	@JsonIgnore
 	private MagnitudArreglo magnitudArreglo;
 

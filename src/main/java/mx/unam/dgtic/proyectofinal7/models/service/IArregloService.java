@@ -7,9 +7,13 @@ import mx.unam.dgtic.proyectofinal7.models.entity.ArregloMedicion;
 public interface IArregloService {
 
 	public abstract Optional<ArregloMedicion> findById(Integer id);
-	public abstract Iterable<ArregloMedicion> findAll();
-	public abstract ArregloMedicion save(ArregloMedicion entity);
-	public abstract void deleteById(Integer id);
 
+	public abstract Iterable<ArregloMedicion> findAll();
+
+	public abstract ArregloMedicion insertarArreglo(ArregloMedicion entity);
+
+	public abstract ArregloMedicion actualizarArreglo(ArregloMedicion entity);
+
+	public abstract void eliminarArregloPorId(Integer id);
 
 }

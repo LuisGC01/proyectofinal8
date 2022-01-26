@@ -53,8 +53,8 @@ public class Usuario implements Serializable{
 	@Column(name = "usu_activo")
 	private Boolean activo;
 	
-	@OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@Fetch(FetchMode.JOIN)
+	@OneToMany(mappedBy = "usuario")
+	//@Fetch(FetchMode.JOIN)
 	private List<ArregloMedicion> arreglosMedicion;
 	//private List<SecuenciaMedicion> secuenciasMedicion;
 	
@@ -85,6 +85,10 @@ public class Usuario implements Serializable{
 		this.primerApellido = primerApellido;
 		this.segundoApellido = segundoApellido;
 		this.activo = activo;
+	}
+
+	public Usuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public Integer getIdUsuario() {

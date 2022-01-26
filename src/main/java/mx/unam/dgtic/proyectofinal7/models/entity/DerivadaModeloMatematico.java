@@ -37,9 +37,9 @@ public class DerivadaModeloMatematico implements Serializable{
 	@Column(name = "der_mod_mat_respecto_a")
 	private String respectoA;
 
-	@ManyToOne(targetEntity = ModeloMatematico.class, fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "id_modelo_matematico",nullable = false)
-	@Fetch(FetchMode.JOIN)
+	@ManyToOne
+	@JoinColumn(name = "id_modelo_matematico")
+	//@Fetch(FetchMode.JOIN)
 	@JsonIgnore
 	private ModeloMatematico modeloMatematico;
 
@@ -71,6 +71,9 @@ public class DerivadaModeloMatematico implements Serializable{
 		this.derivadaParcial = derivadaParcial;
 		this.respectoA = respectoA;
 	}
+
+
+
 
 	public Integer getIdDerivadaModeloMatematico() {
 		return idDerivadaModeloMatematico;

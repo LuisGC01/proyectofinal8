@@ -47,17 +47,17 @@ public class ArregloMedicion implements Serializable {
 	@Column(name = "arr_med_formato_cal_cert")
 	private String formatoCalCert;
 
-	@OneToOne(targetEntity = Imagen.class, fetch = FetchType.EAGER, optional = false)
+	@OneToOne
 	@JoinColumn(name = "id_imagen", nullable = false)
-	@Fetch(FetchMode.JOIN)
+	//@Fetch(FetchMode.JOIN)
 	private Imagen imagen;
 
-	@ManyToOne(targetEntity = Usuario.class, fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "id_usuario", nullable = false)
-	@Fetch(FetchMode.JOIN)
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
+	//@Fetch(FetchMode.JOIN)
 	private Usuario usuario;
 
-	@OneToOne(mappedBy = "arregloMedicion", cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+	@OneToOne(mappedBy = "arregloMedicion")
 	private ModeloMatematico modeloMatematico;
 
 	public ArregloMedicion() {
@@ -107,6 +107,18 @@ public class ArregloMedicion implements Serializable {
 		this.version = version;
 		this.descripcion = descripcion;
 		this.formatoCalCert = formatoCalCert;
+	}
+
+	public ArregloMedicion(Integer idArregloMedicion, String titulo, LocalDateTime fecha, String version,
+			String descripcion, String formatoCalCert, Imagen imagen, Usuario usuario) {
+		this.idArregloMedicion = idArregloMedicion;
+		this.titulo = titulo;
+		this.fecha = fecha;
+		this.version = version;
+		this.descripcion = descripcion;
+		this.formatoCalCert = formatoCalCert;
+		this.imagen = imagen;
+		this.usuario = usuario;
 	}
 
 	public Integer getIdArregloMedicion() {
