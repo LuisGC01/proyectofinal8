@@ -1,25 +1,102 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
-public class SecuenciaMedicion {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "secuencia_medicion")
+public class SecuenciaMedicion implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6890790289380160993L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_secuencia_medicion")
 	private Integer idSecuenciaMedicion;
+
+	@Column(name = "sec_med_titulo")
 	private String titulo;
+
+	@Column(name = "sec_med_descripcion")
 	private String descripcion;
+
+	@Column(name = "sec_med_fecha")
 	private LocalDateTime fecha;
-	private Integer idUsuario;
+
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
+	private Usuario usuario;
+
+	@OneToMany(mappedBy = "secuenciaMedicion")
+	private Set<SecuenciaDetalle> secuenciaDetalles;
 
 	public SecuenciaMedicion() {
 		// TODO Auto-generated constructor stub
 	}
 
+	public SecuenciaMedicion(String titulo, String descripcion, LocalDateTime fecha) {
+		this.titulo = titulo;
+		this.descripcion = descripcion;
+		this.fecha = fecha;
+	}
+
+	public SecuenciaMedicion(String titulo, String descripcion, LocalDateTime fecha, Usuario usuario) {
+		this.titulo = titulo;
+		this.descripcion = descripcion;
+		this.fecha = fecha;
+		this.usuario = usuario;
+	}
+
 	public SecuenciaMedicion(Integer idSecuenciaMedicion, String titulo, String descripcion, LocalDateTime fecha,
-			Integer idUsuario) {
+			Usuario usuario) {
 		this.idSecuenciaMedicion = idSecuenciaMedicion;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
-		this.idUsuario = idUsuario;
+		this.usuario = usuario;
+	}
+
+	public SecuenciaMedicion(Integer idSecuenciaMedicion, String titulo, String descripcion, LocalDateTime fecha) {
+		this.idSecuenciaMedicion = idSecuenciaMedicion;
+		this.titulo = titulo;
+		this.descripcion = descripcion;
+		this.fecha = fecha;
+	}
+
+	public SecuenciaMedicion(Integer idSecuenciaMedicion, String titulo, String descripcion, LocalDateTime fecha,
+			Usuario usuario, Set<SecuenciaDetalle> secuenciaDetalles) {
+		this.idSecuenciaMedicion = idSecuenciaMedicion;
+		this.titulo = titulo;
+		this.descripcion = descripcion;
+		this.fecha = fecha;
+		this.usuario = usuario;
+		this.secuenciaDetalles = secuenciaDetalles;
+	}
+
+	public SecuenciaMedicion(String titulo, String descripcion, LocalDateTime fecha, Usuario usuario,
+			Set<SecuenciaDetalle> secuenciaDetalles) {
+		this.titulo = titulo;
+		this.descripcion = descripcion;
+		this.fecha = fecha;
+		this.usuario = usuario;
+		this.secuenciaDetalles = secuenciaDetalles;
+	}
+
+	public SecuenciaMedicion(Integer idSecuenciaMedicion) {
+		this.idSecuenciaMedicion = idSecuenciaMedicion;
 	}
 
 	public Integer getIdSecuenciaMedicion() {
@@ -54,17 +131,22 @@ public class SecuenciaMedicion {
 		this.fecha = fecha;
 	}
 
-	public Integer getIdUsuario() {
-		return idUsuario;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setIdUsuario(Integer idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
-	@Override
-	public String toString() {
-		return "SecuenciaMedicion [idSecuenciaMedicion=" + idSecuenciaMedicion + ", titulo=" + titulo + ", descripcion="
-				+ descripcion + ", fecha=" + fecha + ", idUsuario=" + idUsuario + "]";
+	public Set<SecuenciaDetalle> getSecuenciaDetalles() {
+		return secuenciaDetalles;
 	}
+
+	public void setSecuenciaDetalles(Set<SecuenciaDetalle> secuenciaDetalles) {
+		this.secuenciaDetalles = secuenciaDetalles;
+	}
+
+
+
 }

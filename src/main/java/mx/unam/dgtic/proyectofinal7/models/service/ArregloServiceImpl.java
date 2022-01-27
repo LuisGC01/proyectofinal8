@@ -73,24 +73,22 @@ public class ArregloServiceImpl implements IArregloService {
 	@Override
 	@Transactional
 	public void eliminarArregloPorId(Integer id) {
-		
-		ArregloMedicion amr=arregloMedicionRepository.findById(id).get();
-		
+
+		ArregloMedicion amr = arregloMedicionRepository.findById(id).get();
+
 		for (MagnitudArreglo mar : amr.getModeloMatematico().getMagnitudesArreglo()) {
 			if (mar.getMagnitudDetalle() != null) {
 				magnitudDetalleRepository.deleteById(mar.getMagnitudDetalle().getIdMagnitudDetalle());
 			}
 			magnitudArregloRepository.deleteById(mar.getIdMagnitudArreglo());
 		}
-		
+
 		for (DerivadaModeloMatematico dmmr : amr.getModeloMatematico().getDerivadasModeloMatematico()) {
 			derivadaModeloMatematicoRepository.deleteById(dmmr.getIdDerivadaModeloMatematico());
 		}
 		modeloMatematicoRepository.deleteById(amr.getModeloMatematico().getIdModeloMatematico());
 		arregloMedicionRepository.deleteById(amr.getIdArregloMedicion());
 	}
-
-
 
 	@Override
 	@Transactional
@@ -108,30 +106,41 @@ public class ArregloServiceImpl implements IArregloService {
 		ModeloMatematico mmr = modeloMatematicoRepository
 				.save(new ModeloMatematico(entity.getModeloMatematico().getEcuacion(), amr));
 		Set<DerivadaModeloMatematico> derivadas = new HashSet<DerivadaModeloMatematico>();
-		for (DerivadaModeloMatematico dme : entity.getModeloMatematico().getDerivadasModeloMatematico()) {
-			DerivadaModeloMatematico dmr = derivadaModeloMatematicoRepository
-					.save(new DerivadaModeloMatematico(dme.getDerivadaParcial(), dme.getRespectoA(), modeloMatematicoRepository.findById(mmr.getIdModeloMatematico()).get()));
-			derivadas.add(dme);
+		if (entity.getModeloMatematico().getDerivadasModeloMatematico() != null) {
+			if (entity.getModeloMatematico().getDerivadasModeloMatematico().size() > 0) {
+				for (DerivadaModeloMatematico dme : entity.getModeloMatematico().getDerivadasModeloMatematico()) {
+					DerivadaModeloMatematico dmr = derivadaModeloMatematicoRepository
+							.save(new DerivadaModeloMatematico(dme.getDerivadaParcial(), dme.getRespectoA(),
+									modeloMatematicoRepository.findById(mmr.getIdModeloMatematico()).get()));
+					derivadas.add(dme);
+				}
+			}
 		}
 
 		Set<MagnitudArreglo> magnitudes = new HashSet<MagnitudArreglo>();
 
-		for (MagnitudArreglo mae : entity.getModeloMatematico().getMagnitudesArreglo()) {
-			MagnitudArreglo mar = magnitudArregloRepository.save(new MagnitudArreglo(mae.getMagnitud(), mae.getUnidad(),
-					mae.getDefinicion(), mae.getCapturar(), mae.getRepetir(), mae.getAsociado(), mmr));
-			if (mae.getMagnitudDetalle() != null) {
-				Imagen ir2 = imagenRepository.save(new Imagen(mae.getMagnitudDetalle().getImagen().getImagen(),
-						mae.getMagnitudDetalle().getImagen().getLeyenda(),
-						mae.getMagnitudDetalle().getImagen().getDescripcion()));
-				MagnitudDetalle mdr = magnitudDetalleRepository
-						.save(new MagnitudDetalle(mae.getMagnitudDetalle().getTipo(),
-								mae.getMagnitudDetalle().getDescripcion(), mae.getMagnitudDetalle().getDistribucion(),
+		if (entity.getModeloMatematico().getMagnitudesArreglo() != null) {
+			if (entity.getModeloMatematico().getMagnitudesArreglo().size() > 0) {
+				for (MagnitudArreglo mae : entity.getModeloMatematico().getMagnitudesArreglo()) {
+					MagnitudArreglo mar = magnitudArregloRepository
+							.save(new MagnitudArreglo(mae.getMagnitud(), mae.getUnidad(), mae.getDefinicion(),
+									mae.getCapturar(), mae.getRepetir(), mae.getAsociado(), mmr));
+					if (mae.getMagnitudDetalle() != null) {
+						Imagen ir2 = imagenRepository.save(new Imagen(mae.getMagnitudDetalle().getImagen().getImagen(),
+								mae.getMagnitudDetalle().getImagen().getLeyenda(),
+								mae.getMagnitudDetalle().getImagen().getDescripcion()));
+						MagnitudDetalle mdr = magnitudDetalleRepository.save(new MagnitudDetalle(
+								mae.getMagnitudDetalle().getTipo(), mae.getMagnitudDetalle().getDescripcion(),
+								mae.getMagnitudDetalle().getDistribucion(),
 								mae.getMagnitudDetalle().getEvaluacionIncertidumbre(),
 								mae.getMagnitudDetalle().getMetodoObservacion(), mae.getMagnitudDetalle().getValor(),
 								ir2, mar));
-				mar.setMagnitudDetalle(mdr);
+						mar.setMagnitudDetalle(mdr);
+					}
+					magnitudes.add(mar);
+				}
+
 			}
-			magnitudes.add(mar);
 		}
 
 		mmr.setDerivadasModeloMatematico(derivadas);
@@ -145,38 +154,42 @@ public class ArregloServiceImpl implements IArregloService {
 	@Transactional
 	public ArregloMedicion actualizarArreglo(ArregloMedicion entity) {
 		// TODO Auto-generated method stub
-		
+
 		Imagen ir1 = imagenRepository.save(entity.getImagen());
-		ArregloMedicion amaux = new ArregloMedicion(entity.getIdArregloMedicion(),entity.getTitulo(), LocalDateTime.now(), entity.getVersion(),
-				entity.getDescripcion(), entity.getFormatoCalCert(),ir1,usuarioRepository.findById(entity.getUsuario().getIdUsuario()).get());
-		//amaux.setImagen(ir1);
-		//Usuario u = entity.getUsuario();
-		//amaux.setUsuario();
+		ArregloMedicion amaux = new ArregloMedicion(entity.getIdArregloMedicion(), entity.getTitulo(),
+				LocalDateTime.now(), entity.getVersion(), entity.getDescripcion(), entity.getFormatoCalCert(), ir1,
+				usuarioRepository.findById(entity.getUsuario().getIdUsuario()).get());
+		// amaux.setImagen(ir1);
+		// Usuario u = entity.getUsuario();
+		// amaux.setUsuario();
 		ArregloMedicion amr = arregloMedicionRepository.save(amaux);
-		ModeloMatematico mmr = modeloMatematicoRepository
-				.save(new ModeloMatematico(entity.getModeloMatematico().getIdModeloMatematico(),entity.getModeloMatematico().getEcuacion(), amr));
+		ModeloMatematico mmr = modeloMatematicoRepository.save(new ModeloMatematico(
+				entity.getModeloMatematico().getIdModeloMatematico(), entity.getModeloMatematico().getEcuacion(), amr));
 		Set<DerivadaModeloMatematico> derivadas = new HashSet<DerivadaModeloMatematico>();
 		for (DerivadaModeloMatematico dme : entity.getModeloMatematico().getDerivadasModeloMatematico()) {
-			DerivadaModeloMatematico dmr = derivadaModeloMatematicoRepository
-					.save(new DerivadaModeloMatematico(dme.getIdDerivadaModeloMatematico(),dme.getDerivadaParcial(), dme.getRespectoA(), modeloMatematicoRepository.findById(mmr.getIdModeloMatematico()).get()));
+			DerivadaModeloMatematico dmr = derivadaModeloMatematicoRepository.save(new DerivadaModeloMatematico(
+					dme.getIdDerivadaModeloMatematico(), dme.getDerivadaParcial(), dme.getRespectoA(),
+					modeloMatematicoRepository.findById(mmr.getIdModeloMatematico()).get()));
 			derivadas.add(dme);
 		}
 
 		Set<MagnitudArreglo> magnitudes = new HashSet<MagnitudArreglo>();
 
 		for (MagnitudArreglo mae : entity.getModeloMatematico().getMagnitudesArreglo()) {
-			MagnitudArreglo mar = magnitudArregloRepository.save(new MagnitudArreglo(mae.getIdMagnitudArreglo(),mae.getMagnitud(), mae.getUnidad(),
-					mae.getDefinicion(), mae.getCapturar(), mae.getRepetir(), mae.getAsociado(), mmr));
+			MagnitudArreglo mar = magnitudArregloRepository
+					.save(new MagnitudArreglo(mae.getIdMagnitudArreglo(), mae.getMagnitud(), mae.getUnidad(),
+							mae.getDefinicion(), mae.getCapturar(), mae.getRepetir(), mae.getAsociado(), mmr));
 			if (mae.getMagnitudDetalle() != null) {
-				Imagen ir2 = imagenRepository.save(new Imagen(mae.getMagnitudDetalle().getImagen().getIdImagen(),mae.getMagnitudDetalle().getImagen().getImagen(),
+				Imagen ir2 = imagenRepository.save(new Imagen(mae.getMagnitudDetalle().getImagen().getIdImagen(),
+						mae.getMagnitudDetalle().getImagen().getImagen(),
 						mae.getMagnitudDetalle().getImagen().getLeyenda(),
 						mae.getMagnitudDetalle().getImagen().getDescripcion()));
-				MagnitudDetalle mdr = magnitudDetalleRepository
-						.save(new MagnitudDetalle(mae.getMagnitudDetalle().getIdMagnitudDetalle(),mae.getMagnitudDetalle().getTipo(),
-								mae.getMagnitudDetalle().getDescripcion(), mae.getMagnitudDetalle().getDistribucion(),
-								mae.getMagnitudDetalle().getEvaluacionIncertidumbre(),
-								mae.getMagnitudDetalle().getMetodoObservacion(), mae.getMagnitudDetalle().getValor(),
-								ir2, mar));
+				MagnitudDetalle mdr = magnitudDetalleRepository.save(new MagnitudDetalle(
+						mae.getMagnitudDetalle().getIdMagnitudDetalle(), mae.getMagnitudDetalle().getTipo(),
+						mae.getMagnitudDetalle().getDescripcion(), mae.getMagnitudDetalle().getDistribucion(),
+						mae.getMagnitudDetalle().getEvaluacionIncertidumbre(),
+						mae.getMagnitudDetalle().getMetodoObservacion(), mae.getMagnitudDetalle().getValor(), ir2,
+						mar));
 				mar.setMagnitudDetalle(mdr);
 			}
 			magnitudes.add(mar);
@@ -187,8 +200,8 @@ public class ArregloServiceImpl implements IArregloService {
 		amr.setModeloMatematico(mmr);
 
 		return amr;
-		
-		//return null;
+
+		// return null;
 	}
 
 }

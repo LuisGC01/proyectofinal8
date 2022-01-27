@@ -1,36 +1,134 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
-public class SecuenciaDetalle {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "secuencia_detalle")
+public class SecuenciaDetalle implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4240347558214409145L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_secuencia_detalle")
 	private Integer idSecuenciaDetalle;
-	private Integer idSecuenciaMedicion;
-	private Integer idArregloMedicion;
-	private Integer idMagnitudArreglo;
+
+	@Column(name = "sec_det_numero_punto_secuencia")
 	private Integer numeroPuntoSecuencia;
+
+	@Column(name = "sec_det_tipo_punto")
 	private Character tipoPunto;
+
+	@Column(name = "sec_det_descripcion_punto")
 	private String descripcionPunto;
+
+	@Column(name = "sec_det_valor")
 	private String valor;
+
+	@Column(name = "sec_det_barrido_principal")
 	private String barridoPrincipal;
+
+	@Column(name = "sec_det_barrido_secundario")
 	private String barridoSecundario;
+
+	@Column(name = "sec_det_numero_mediciones")
 	private Integer numeroMediciones;
+
+	@Column(name = "sec_det_instrucciones")
 	private String instrucciones;
+
+	@Column(name = "sec_det_comentarios")
 	private String comentario;
+
+	@Column(name = "sec_det_dialogo_txto")
 	private String dialogoTxt;
+
+	@Column(name = "sec_det_dialogo_entrada")
 	private String dialogoEntrada;
+
+	@Column(name = "sec_det_dialogo_validacion")
 	private String dialogoValidacion;
+
+	@ManyToOne
+	@JoinColumn(name = "id_secuencia_medicion")
+	@JsonIgnore
+	private SecuenciaMedicion secuenciaMedicion;
+
+	@ManyToOne
+	@JoinColumn(name = "id_arreglo_medicion")
+	private ArregloMedicion arregloMedicion;
+
+	@ManyToOne
+	@JoinColumn(name = "id_magnitud_arreglo")
+	private MagnitudArreglo magnitudArreglo;
 
 	public SecuenciaDetalle() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SecuenciaDetalle(Integer idSecuenciaDetalle, Integer idSecuenciaMedicion, Integer idArregloMedicion,
-			Integer idMagnitudArreglo, Integer numeroPuntoSecuencia, Character tipoPunto, String descripcionPunto,
-			String valor, String barridoPrincipal, String barridoSecundario, Integer numeroMediciones,
-			String instrucciones, String comentario, String dialogoTxt, String dialogoEntrada,
+	public SecuenciaDetalle(Integer idSecuenciaDetalle, Integer numeroPuntoSecuencia, Character tipoPunto,
+			String descripcionPunto, String valor, String barridoPrincipal, String barridoSecundario,
+			Integer numeroMediciones, String instrucciones, String comentario, String dialogoTxt, String dialogoEntrada,
+			String dialogoValidacion, SecuenciaMedicion secuenciaMedicion, ArregloMedicion arregloMedicion,
+			MagnitudArreglo magnitudArreglo) {
+		this.idSecuenciaDetalle = idSecuenciaDetalle;
+		this.numeroPuntoSecuencia = numeroPuntoSecuencia;
+		this.tipoPunto = tipoPunto;
+		this.descripcionPunto = descripcionPunto;
+		this.valor = valor;
+		this.barridoPrincipal = barridoPrincipal;
+		this.barridoSecundario = barridoSecundario;
+		this.numeroMediciones = numeroMediciones;
+		this.instrucciones = instrucciones;
+		this.comentario = comentario;
+		this.dialogoTxt = dialogoTxt;
+		this.dialogoEntrada = dialogoEntrada;
+		this.dialogoValidacion = dialogoValidacion;
+		this.secuenciaMedicion = secuenciaMedicion;
+		this.arregloMedicion = arregloMedicion;
+		this.magnitudArreglo = magnitudArreglo;
+	}
+
+	public SecuenciaDetalle(Integer numeroPuntoSecuencia, Character tipoPunto, String descripcionPunto, String valor,
+			String barridoPrincipal, String barridoSecundario, Integer numeroMediciones, String instrucciones,
+			String comentario, String dialogoTxt, String dialogoEntrada, String dialogoValidacion,
+			SecuenciaMedicion secuenciaMedicion, ArregloMedicion arregloMedicion, MagnitudArreglo magnitudArreglo) {
+		this.numeroPuntoSecuencia = numeroPuntoSecuencia;
+		this.tipoPunto = tipoPunto;
+		this.descripcionPunto = descripcionPunto;
+		this.valor = valor;
+		this.barridoPrincipal = barridoPrincipal;
+		this.barridoSecundario = barridoSecundario;
+		this.numeroMediciones = numeroMediciones;
+		this.instrucciones = instrucciones;
+		this.comentario = comentario;
+		this.dialogoTxt = dialogoTxt;
+		this.dialogoEntrada = dialogoEntrada;
+		this.dialogoValidacion = dialogoValidacion;
+		this.secuenciaMedicion = secuenciaMedicion;
+		this.arregloMedicion = arregloMedicion;
+		this.magnitudArreglo = magnitudArreglo;
+	}
+
+	public SecuenciaDetalle(Integer idSecuenciaDetalle, Integer numeroPuntoSecuencia, Character tipoPunto,
+			String descripcionPunto, String valor, String barridoPrincipal, String barridoSecundario,
+			Integer numeroMediciones, String instrucciones, String comentario, String dialogoTxt, String dialogoEntrada,
 			String dialogoValidacion) {
 		this.idSecuenciaDetalle = idSecuenciaDetalle;
-		this.idSecuenciaMedicion = idSecuenciaMedicion;
-		this.idArregloMedicion = idArregloMedicion;
-		this.idMagnitudArreglo = idMagnitudArreglo;
 		this.numeroPuntoSecuencia = numeroPuntoSecuencia;
 		this.tipoPunto = tipoPunto;
 		this.descripcionPunto = descripcionPunto;
@@ -45,36 +143,33 @@ public class SecuenciaDetalle {
 		this.dialogoValidacion = dialogoValidacion;
 	}
 
+	public SecuenciaDetalle(Integer numeroPuntoSecuencia, Character tipoPunto, String descripcionPunto, String valor,
+			String barridoPrincipal, String barridoSecundario, Integer numeroMediciones, String instrucciones,
+			String comentario, String dialogoTxt, String dialogoEntrada, String dialogoValidacion) {
+		this.numeroPuntoSecuencia = numeroPuntoSecuencia;
+		this.tipoPunto = tipoPunto;
+		this.descripcionPunto = descripcionPunto;
+		this.valor = valor;
+		this.barridoPrincipal = barridoPrincipal;
+		this.barridoSecundario = barridoSecundario;
+		this.numeroMediciones = numeroMediciones;
+		this.instrucciones = instrucciones;
+		this.comentario = comentario;
+		this.dialogoTxt = dialogoTxt;
+		this.dialogoEntrada = dialogoEntrada;
+		this.dialogoValidacion = dialogoValidacion;
+	}
+
+	public SecuenciaDetalle(Integer idSecuenciaDetalle) {
+		this.idSecuenciaDetalle = idSecuenciaDetalle;
+	}
+
 	public Integer getIdSecuenciaDetalle() {
 		return idSecuenciaDetalle;
 	}
 
 	public void setIdSecuenciaDetalle(Integer idSecuenciaDetalle) {
 		this.idSecuenciaDetalle = idSecuenciaDetalle;
-	}
-
-	public Integer getIdSecuenciaMedicion() {
-		return idSecuenciaMedicion;
-	}
-
-	public void setIdSecuenciaMedicion(Integer idSecuenciaMedicion) {
-		this.idSecuenciaMedicion = idSecuenciaMedicion;
-	}
-
-	public Integer getIdArregloMedicion() {
-		return idArregloMedicion;
-	}
-
-	public void setIdArregloMedicion(Integer idArregloMedicion) {
-		this.idArregloMedicion = idArregloMedicion;
-	}
-
-	public Integer getIdMagnitudArreglo() {
-		return idMagnitudArreglo;
-	}
-
-	public void setIdMagnitudArreglo(Integer idMagnitudArreglo) {
-		this.idMagnitudArreglo = idMagnitudArreglo;
 	}
 
 	public Integer getNumeroPuntoSecuencia() {
@@ -173,14 +268,28 @@ public class SecuenciaDetalle {
 		this.dialogoValidacion = dialogoValidacion;
 	}
 
-	@Override
-	public String toString() {
-		return "SecuenciaDetalle [idSecuenciaDetalle=" + idSecuenciaDetalle + ", idSecuenciaMedicion="
-				+ idSecuenciaMedicion + ", idArregloMedicion=" + idArregloMedicion + ", idMagnitudArreglo="
-				+ idMagnitudArreglo + ", numeroPuntoSecuencia=" + numeroPuntoSecuencia + ", tipoPunto=" + tipoPunto
-				+ ", descripcionPunto=" + descripcionPunto + ", valor=" + valor + ", barridoPrincipal="
-				+ barridoPrincipal + ", barridoSecundario=" + barridoSecundario + ", numeroMediciones="
-				+ numeroMediciones + ", instrucciones=" + instrucciones + ", comentario=" + comentario + ", dialogoTxt="
-				+ dialogoTxt + ", dialogoEntrada=" + dialogoEntrada + ", dialogoValidacion=" + dialogoValidacion + "]";
+	public SecuenciaMedicion getSecuenciaMedicion() {
+		return secuenciaMedicion;
 	}
+
+	public void setSecuenciaMedicion(SecuenciaMedicion secuenciaMedicion) {
+		this.secuenciaMedicion = secuenciaMedicion;
+	}
+
+	public ArregloMedicion getArregloMedicion() {
+		return arregloMedicion;
+	}
+
+	public void setArregloMedicion(ArregloMedicion arregloMedicion) {
+		this.arregloMedicion = arregloMedicion;
+	}
+
+	public MagnitudArreglo getMagnitudArreglo() {
+		return magnitudArreglo;
+	}
+
+	public void setMagnitudArreglo(MagnitudArreglo magnitudArreglo) {
+		this.magnitudArreglo = magnitudArreglo;
+	}
+
 }

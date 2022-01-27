@@ -43,6 +43,10 @@ public class Imagen {
 		this.descripcion = descripcion;
 	}
 
+	public Imagen(Integer idImagen) {
+		this.idImagen = idImagen;
+	}
+
 	public Integer getIdImagen() {
 		return idImagen;
 	}

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "derivada_modelo_matematico")
-public class DerivadaModeloMatematico implements Serializable{
+public class DerivadaModeloMatematico implements Serializable {
 
 	/**
 	 * 
@@ -39,7 +39,7 @@ public class DerivadaModeloMatematico implements Serializable{
 
 	@ManyToOne
 	@JoinColumn(name = "id_modelo_matematico")
-	//@Fetch(FetchMode.JOIN)
+	// @Fetch(FetchMode.JOIN)
 	@JsonIgnore
 	private ModeloMatematico modeloMatematico;
 
@@ -72,8 +72,9 @@ public class DerivadaModeloMatematico implements Serializable{
 		this.respectoA = respectoA;
 	}
 
-
-
+	public DerivadaModeloMatematico(Integer idDerivadaModeloMatematico) {
+		this.idDerivadaModeloMatematico = idDerivadaModeloMatematico;
+	}
 
 	public Integer getIdDerivadaModeloMatematico() {
 		return idDerivadaModeloMatematico;
@@ -107,6 +108,4 @@ public class DerivadaModeloMatematico implements Serializable{
 		this.modeloMatematico = modeloMatematico;
 	}
 
-	
-	
 }

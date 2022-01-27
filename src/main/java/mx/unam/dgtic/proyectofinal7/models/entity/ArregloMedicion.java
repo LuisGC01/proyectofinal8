@@ -2,6 +2,7 @@ package mx.unam.dgtic.proyectofinal7.models.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,11 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "arreglo_medicion")
@@ -59,6 +63,10 @@ public class ArregloMedicion implements Serializable {
 
 	@OneToOne(mappedBy = "arregloMedicion")
 	private ModeloMatematico modeloMatematico;
+	
+	@OneToMany(mappedBy = "arregloMedicion")
+	@JsonIgnore
+	private Set<SecuenciaDetalle> secuenciaDetalles;
 
 	public ArregloMedicion() {
 		// TODO Auto-generated constructor stub
@@ -119,6 +127,10 @@ public class ArregloMedicion implements Serializable {
 		this.formatoCalCert = formatoCalCert;
 		this.imagen = imagen;
 		this.usuario = usuario;
+	}
+
+	public ArregloMedicion(Integer idArregloMedicion) {
+		this.idArregloMedicion = idArregloMedicion;
 	}
 
 	public Integer getIdArregloMedicion() {
@@ -191,6 +203,14 @@ public class ArregloMedicion implements Serializable {
 
 	public void setModeloMatematico(ModeloMatematico modeloMatematico) {
 		this.modeloMatematico = modeloMatematico;
+	}
+
+	public Set<SecuenciaDetalle> getSecuenciaDetalles() {
+		return secuenciaDetalles;
+	}
+
+	public void setSecuenciaDetalles(Set<SecuenciaDetalle> secuenciaDetalles) {
+		this.secuenciaDetalles = secuenciaDetalles;
 	}
 
 }

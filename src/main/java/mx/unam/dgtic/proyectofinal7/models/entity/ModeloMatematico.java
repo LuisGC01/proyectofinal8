@@ -91,6 +91,10 @@ public class ModeloMatematico implements Serializable {
 		this.arregloMedicion = arregloMedicion;
 	}
 
+	public ModeloMatematico(Integer idModeloMatematico) {
+		this.idModeloMatematico = idModeloMatematico;
+	}
+
 	public Integer getIdModeloMatematico() {
 		return idModeloMatematico;
 	}

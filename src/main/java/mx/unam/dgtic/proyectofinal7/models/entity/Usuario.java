@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable{
@@ -54,11 +56,14 @@ public class Usuario implements Serializable{
 	private Boolean activo;
 	
 	@OneToMany(mappedBy = "usuario")
+	@JsonIgnore
 	//@Fetch(FetchMode.JOIN)
 	private List<ArregloMedicion> arreglosMedicion;
 	//private List<SecuenciaMedicion> secuenciasMedicion;
 	
-	
+	@OneToMany(mappedBy = "usuario")
+	@JsonIgnore
+	private List<SecuenciaMedicion> secuenciasMedicion;
 
 	public Usuario() {
 		// TODO Auto-generated constructor stub
@@ -155,28 +160,21 @@ public class Usuario implements Serializable{
 		this.activo = activo;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(idUsuario);
+	public List<ArregloMedicion> getArreglosMedicion() {
+		return arreglosMedicion;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		return Objects.equals(idUsuario, other.idUsuario);
+	public void setArreglosMedicion(List<ArregloMedicion> arreglosMedicion) {
+		this.arreglosMedicion = arreglosMedicion;
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario [idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", password=" + password
-				+ ", puesto=" + puesto + ", nombre=" + nombre + ", primerApellido=" + primerApellido
-				+ ", segundoApellido=" + segundoApellido + ", activo=" + activo + "]";
+	public List<SecuenciaMedicion> getSecuenciasMedicion() {
+		return secuenciasMedicion;
 	}
+
+	public void setSecuenciasMedicion(List<SecuenciaMedicion> secuenciasMedicion) {
+		this.secuenciasMedicion = secuenciasMedicion;
+	}
+
 
 }

@@ -1,6 +1,7 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -59,6 +61,9 @@ public class MagnitudArreglo implements Serializable {
 
 	@OneToOne(mappedBy = "magnitudArreglo")
 	private MagnitudDetalle magnitudDetalle;
+	
+	@OneToMany(mappedBy = "magnitudArreglo")
+	private Set<SecuenciaDetalle> secuenciaDetalles;
 
 	public MagnitudArreglo() {
 		// TODO Auto-generated constructor stub
@@ -132,6 +137,10 @@ public class MagnitudArreglo implements Serializable {
 		this.repetir = repetir;
 		this.asociado = asociado;
 		this.modeloMatematico = modeloMatematico;
+	}
+
+	public MagnitudArreglo(Integer idMagnitudArreglo) {
+		this.idMagnitudArreglo = idMagnitudArreglo;
 	}
 
 	public Integer getIdMagnitudArreglo() {

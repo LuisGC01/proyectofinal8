@@ -111,6 +111,12 @@ public class MagnitudDetalle implements Serializable {
 		this.valor = valor;
 	}
 
+
+
+	public MagnitudDetalle(Integer idMagnitudDetalle) {
+		this.idMagnitudDetalle = idMagnitudDetalle;
+	}
+
 	public Integer getIdMagnitudDetalle() {
 		return idMagnitudDetalle;
 	}
