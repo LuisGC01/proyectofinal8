@@ -1,6 +1,7 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -290,6 +291,35 @@ public class SecuenciaDetalle implements Serializable {
 
 	public void setMagnitudArreglo(MagnitudArreglo magnitudArreglo) {
 		this.magnitudArreglo = magnitudArreglo;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idSecuenciaDetalle);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SecuenciaDetalle other = (SecuenciaDetalle) obj;
+		return Objects.equals(idSecuenciaDetalle, other.idSecuenciaDetalle);
+	}
+
+	@Override
+	public String toString() {
+		return "SecuenciaDetalle [idSecuenciaDetalle=" + idSecuenciaDetalle + ", numeroPuntoSecuencia="
+				+ numeroPuntoSecuencia + ", tipoPunto=" + tipoPunto + ", descripcionPunto=" + descripcionPunto
+				+ ", valor=" + valor + ", barridoPrincipal=" + barridoPrincipal + ", barridoSecundario="
+				+ barridoSecundario + ", numeroMediciones=" + numeroMediciones + ", instrucciones=" + instrucciones
+				+ ", comentario=" + comentario + ", dialogoTxt=" + dialogoTxt + ", dialogoEntrada=" + dialogoEntrada
+				+ ", dialogoValidacion=" + dialogoValidacion + ", arregloMedicion="
+				+ ((arregloMedicion != null) ? arregloMedicion.getIdArregloMedicion() : null) + ", magnitudArreglo="
+				+ ((magnitudArreglo != null) ? magnitudArreglo.getIdMagnitudArreglo() : null) + "]";
 	}
 
 }

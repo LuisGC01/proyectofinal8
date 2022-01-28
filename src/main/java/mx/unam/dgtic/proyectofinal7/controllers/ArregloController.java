@@ -1,5 +1,6 @@
 package mx.unam.dgtic.proyectofinal7.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,25 +36,30 @@ public class ArregloController {
 		return arregloService.findAll();
 	}
 
+	@GetMapping(params = "idUsuario")
+	public List<ArregloMedicion> findByUsuario(Integer idUsuario) {
+		return arregloService.findByUsuario(idUsuario);
+	}
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ArregloMedicion insertarArreglo(@RequestBody ArregloMedicion entity) {
 		return arregloService.insertarArreglo(entity);
-		//arregloService.save(entity);
+		// arregloService.save(entity);
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void actualizarArreglo(@PathVariable Integer id, @RequestBody ArregloMedicion entity) {
 		Optional<ArregloMedicion> o = arregloService.findById(id);
-		
+
 		if (o.isPresent()) {
 			ArregloMedicion arregloMedicion = entity;
 			arregloMedicion.setIdArregloMedicion(id);
 			arregloService.actualizarArreglo(arregloMedicion);
 		}
-		
-		//entity.setIdArregloMedicion(id);
+
+		// entity.setIdArregloMedicion(id);
 	}
 
 	@DeleteMapping("/{id}")

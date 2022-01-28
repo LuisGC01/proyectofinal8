@@ -1,5 +1,6 @@
 package mx.unam.dgtic.proyectofinal7.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import mx.unam.dgtic.proyectofinal7.models.entity.SecuenciaDetalle;
 import mx.unam.dgtic.proyectofinal7.models.entity.SecuenciaMedicion;
 import mx.unam.dgtic.proyectofinal7.models.service.ISecuenciaService;
 
@@ -34,6 +35,11 @@ public class SecuenciaController {
 	@GetMapping("/{id}")
 	public SecuenciaMedicion findById(@PathVariable Integer id) {
 		return secuenciaService.findById(id).get();
+	}
+
+	@GetMapping(params = "idUsuario")
+	public List<SecuenciaMedicion> findByUsuario(@RequestParam Integer idUsuario) {
+		return secuenciaService.findByUsuario(idUsuario);
 	}
 
 	@PostMapping

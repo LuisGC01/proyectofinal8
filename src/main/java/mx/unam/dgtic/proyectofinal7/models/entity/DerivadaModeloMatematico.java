@@ -1,19 +1,16 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -106,6 +103,29 @@ public class DerivadaModeloMatematico implements Serializable {
 
 	public void setModeloMatematico(ModeloMatematico modeloMatematico) {
 		this.modeloMatematico = modeloMatematico;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idDerivadaModeloMatematico);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DerivadaModeloMatematico other = (DerivadaModeloMatematico) obj;
+		return Objects.equals(idDerivadaModeloMatematico, other.idDerivadaModeloMatematico);
+	}
+
+	@Override
+	public String toString() {
+		return "DerivadaModeloMatematico [idDerivadaModeloMatematico=" + idDerivadaModeloMatematico
+				+ ", derivadaParcial=" + derivadaParcial + ", respectoA=" + respectoA + "]";
 	}
 
 }

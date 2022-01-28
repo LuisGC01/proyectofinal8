@@ -2,12 +2,11 @@ package mx.unam.dgtic.proyectofinal7.models.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,9 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -53,17 +49,17 @@ public class ArregloMedicion implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "id_imagen", nullable = false)
-	//@Fetch(FetchMode.JOIN)
+	// @Fetch(FetchMode.JOIN)
 	private Imagen imagen;
 
 	@ManyToOne
 	@JoinColumn(name = "id_usuario")
-	//@Fetch(FetchMode.JOIN)
+	// @Fetch(FetchMode.JOIN)
 	private Usuario usuario;
 
 	@OneToOne(mappedBy = "arregloMedicion")
 	private ModeloMatematico modeloMatematico;
-	
+
 	@OneToMany(mappedBy = "arregloMedicion")
 	@JsonIgnore
 	private Set<SecuenciaDetalle> secuenciaDetalles;
@@ -211,6 +207,31 @@ public class ArregloMedicion implements Serializable {
 
 	public void setSecuenciaDetalles(Set<SecuenciaDetalle> secuenciaDetalles) {
 		this.secuenciaDetalles = secuenciaDetalles;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idArregloMedicion);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ArregloMedicion other = (ArregloMedicion) obj;
+		return Objects.equals(idArregloMedicion, other.idArregloMedicion);
+	}
+
+	@Override
+	public String toString() {
+		return "ArregloMedicion [idArregloMedicion=" + idArregloMedicion + ", titulo=" + titulo + ", fecha=" + fecha
+				+ ", version=" + version + ", descripcion=" + descripcion + ", formatoCalCert=" + formatoCalCert
+				+ ", imagen=" + imagen + ", usuario=" + usuario.getIdUsuario() + ", modeloMatematico="
+				+ modeloMatematico + "]";
 	}
 
 }

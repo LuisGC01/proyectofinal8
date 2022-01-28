@@ -1,21 +1,23 @@
 package mx.unam.dgtic.proyectofinal7.models.service;
 
+import java.util.List;
 import java.util.Optional;
 
-import mx.unam.dgtic.proyectofinal7.models.entity.SecuenciaDetalle;
 import mx.unam.dgtic.proyectofinal7.models.entity.SecuenciaMedicion;
 
 public interface ISecuenciaService {
 
-	Iterable<SecuenciaMedicion> findAll();
+	public abstract Iterable<SecuenciaMedicion> findAll();
 
-	Optional<SecuenciaMedicion> findById(Integer id);
+	public abstract Optional<SecuenciaMedicion> findById(Integer id);
 
-	SecuenciaMedicion insertarSecuencia(SecuenciaMedicion s);
+	public abstract SecuenciaMedicion insertarSecuencia(SecuenciaMedicion s);
 
-	SecuenciaMedicion actualizarSecuencia(SecuenciaMedicion s);
+	public abstract SecuenciaMedicion actualizarSecuencia(SecuenciaMedicion s);
 
-	void borrarSecuenciaPorId(Integer id);
+	public abstract void borrarSecuenciaPorId(Integer id);
+
+	public abstract List<SecuenciaMedicion> findByUsuario(Integer idUsuario);
 
 
 }

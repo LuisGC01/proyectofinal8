@@ -1,9 +1,9 @@
 package mx.unam.dgtic.proyectofinal7.models.service;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import mx.unam.dgtic.proyectofinal7.models.entity.SecuenciaDetalle;
 import mx.unam.dgtic.proyectofinal7.models.entity.SecuenciaMedicion;
-import mx.unam.dgtic.proyectofinal7.models.entity.Usuario;
 import mx.unam.dgtic.proyectofinal7.models.repository.IArregloMedicionRepository;
 import mx.unam.dgtic.proyectofinal7.models.repository.IMagnitudArregloRepository;
 import mx.unam.dgtic.proyectofinal7.models.repository.ISecuenciaDetalleRepository;
@@ -53,6 +52,12 @@ public class SecuenciaServiceImpl implements ISecuenciaService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	public List<SecuenciaMedicion> findByUsuario(Integer idUsuario) {
+		return secuenciaMedicionRepository.findByUsuario(usuarioRepository.findById(idUsuario).get());
+	}
+
+	@Override
 	@Transactional
 	public SecuenciaMedicion insertarSecuencia(SecuenciaMedicion s) {
 
@@ -60,7 +65,8 @@ public class SecuenciaServiceImpl implements ISecuenciaService {
 		smaux.setUsuario(usuarioRepository.findById(s.getUsuario().getIdUsuario()).get());
 		SecuenciaMedicion smr = secuenciaMedicionRepository.save(smaux);
 
-		Set<SecuenciaDetalle> detalles = new HashSet<SecuenciaDetalle>();
+//		Set<SecuenciaDetalle> detalles = new HashSet<SecuenciaDetalle>();
+		List<SecuenciaDetalle> detalles = new ArrayList<SecuenciaDetalle>();
 		if (s.getSecuenciaDetalles() != null) {
 			if (s.getSecuenciaDetalles().size() > 0) {
 				for (SecuenciaDetalle sd : s.getSecuenciaDetalles()) {
@@ -97,7 +103,8 @@ public class SecuenciaServiceImpl implements ISecuenciaService {
 		smaux.setUsuario(usuarioRepository.findById(s.getUsuario().getIdUsuario()).get());
 		SecuenciaMedicion smr = secuenciaMedicionRepository.save(smaux);
 
-		Set<SecuenciaDetalle> detalles = new HashSet<SecuenciaDetalle>();
+		// Set<SecuenciaDetalle> detalles = new HashSet<SecuenciaDetalle>();
+		List<SecuenciaDetalle> detalles = new ArrayList<SecuenciaDetalle>();
 		if (s.getSecuenciaDetalles() != null) {
 			if (s.getSecuenciaDetalles().size() > 0) {
 				for (SecuenciaDetalle sd : s.getSecuenciaDetalles()) {

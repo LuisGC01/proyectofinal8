@@ -2,11 +2,8 @@ package mx.unam.dgtic.proyectofinal7.models.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,7 +64,12 @@ public class ArregloServiceImpl implements IArregloService {
 	@Transactional(readOnly = true)
 	public Iterable<ArregloMedicion> findAll() {
 		return arregloMedicionRepository.findAll();
+	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<ArregloMedicion> findByUsuario(Integer idUsuario) {
+		return arregloMedicionRepository.findByUsuario(usuarioRepository.findById(idUsuario).get());
 	}
 
 	@Override
@@ -105,19 +107,24 @@ public class ArregloServiceImpl implements IArregloService {
 		ArregloMedicion amr = arregloMedicionRepository.save(amaux);
 		ModeloMatematico mmr = modeloMatematicoRepository
 				.save(new ModeloMatematico(entity.getModeloMatematico().getEcuacion(), amr));
-		Set<DerivadaModeloMatematico> derivadas = new HashSet<DerivadaModeloMatematico>();
+		//Set<DerivadaModeloMatematico> derivadas = new HashSet<DerivadaModeloMatematico>();
+		List<DerivadaModeloMatematico> derivadas = new ArrayList<DerivadaModeloMatematico>();
+		System.out.println(entity.getModeloMatematico().getDerivadasModeloMatematico());
 		if (entity.getModeloMatematico().getDerivadasModeloMatematico() != null) {
 			if (entity.getModeloMatematico().getDerivadasModeloMatematico().size() > 0) {
+				System.out.println(entity.getModeloMatematico().getDerivadasModeloMatematico().size());
 				for (DerivadaModeloMatematico dme : entity.getModeloMatematico().getDerivadasModeloMatematico()) {
+					System.out.println(dme.getDerivadaParcial());
 					DerivadaModeloMatematico dmr = derivadaModeloMatematicoRepository
 							.save(new DerivadaModeloMatematico(dme.getDerivadaParcial(), dme.getRespectoA(),
 									modeloMatematicoRepository.findById(mmr.getIdModeloMatematico()).get()));
-					derivadas.add(dme);
+					derivadas.add(dmr);
 				}
 			}
 		}
 
-		Set<MagnitudArreglo> magnitudes = new HashSet<MagnitudArreglo>();
+		//Set<MagnitudArreglo> magnitudes = new HashSet<MagnitudArreglo>();
+		List<MagnitudArreglo> magnitudes = new ArrayList<MagnitudArreglo>();
 
 		if (entity.getModeloMatematico().getMagnitudesArreglo() != null) {
 			if (entity.getModeloMatematico().getMagnitudesArreglo().size() > 0) {
@@ -165,15 +172,15 @@ public class ArregloServiceImpl implements IArregloService {
 		ArregloMedicion amr = arregloMedicionRepository.save(amaux);
 		ModeloMatematico mmr = modeloMatematicoRepository.save(new ModeloMatematico(
 				entity.getModeloMatematico().getIdModeloMatematico(), entity.getModeloMatematico().getEcuacion(), amr));
-		Set<DerivadaModeloMatematico> derivadas = new HashSet<DerivadaModeloMatematico>();
+		List<DerivadaModeloMatematico> derivadas = new ArrayList<DerivadaModeloMatematico>();
 		for (DerivadaModeloMatematico dme : entity.getModeloMatematico().getDerivadasModeloMatematico()) {
 			DerivadaModeloMatematico dmr = derivadaModeloMatematicoRepository.save(new DerivadaModeloMatematico(
 					dme.getIdDerivadaModeloMatematico(), dme.getDerivadaParcial(), dme.getRespectoA(),
 					modeloMatematicoRepository.findById(mmr.getIdModeloMatematico()).get()));
-			derivadas.add(dme);
+			derivadas.add(dmr);
 		}
 
-		Set<MagnitudArreglo> magnitudes = new HashSet<MagnitudArreglo>();
+		List<MagnitudArreglo> magnitudes = new ArrayList<MagnitudArreglo>();
 
 		for (MagnitudArreglo mae : entity.getModeloMatematico().getMagnitudesArreglo()) {
 			MagnitudArreglo mar = magnitudArregloRepository

@@ -4,25 +4,19 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario implements Serializable{
-
+public class Usuario implements Serializable {
 
 	/**
 	 * 
@@ -54,13 +48,13 @@ public class Usuario implements Serializable{
 
 	@Column(name = "usu_activo")
 	private Boolean activo;
-	
+
 	@OneToMany(mappedBy = "usuario")
 	@JsonIgnore
-	//@Fetch(FetchMode.JOIN)
+	// @Fetch(FetchMode.JOIN)
 	private List<ArregloMedicion> arreglosMedicion;
-	//private List<SecuenciaMedicion> secuenciasMedicion;
-	
+	// private List<SecuenciaMedicion> secuenciasMedicion;
+
 	@OneToMany(mappedBy = "usuario")
 	@JsonIgnore
 	private List<SecuenciaMedicion> secuenciasMedicion;
@@ -176,5 +170,28 @@ public class Usuario implements Serializable{
 		this.secuenciasMedicion = secuenciasMedicion;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(idUsuario);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		return Objects.equals(idUsuario, other.idUsuario);
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", password=" + password
+				+ ", puesto=" + puesto + ", nombre=" + nombre + ", primerApellido=" + primerApellido
+				+ ", segundoApellido=" + segundoApellido + ", activo=" + activo + "]";
+	}
 
 }

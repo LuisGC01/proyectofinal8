@@ -1,19 +1,16 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -51,12 +48,12 @@ public class MagnitudDetalle implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "id_imagen")
-	//@Fetch(FetchMode.JOIN)
+	// @Fetch(FetchMode.JOIN)
 	private Imagen imagen;
 
 	@OneToOne
 	@JoinColumn(name = "id_magnitud_arreglo")
-	//@Fetch(FetchMode.JOIN)
+	// @Fetch(FetchMode.JOIN)
 	@JsonIgnore
 	private MagnitudArreglo magnitudArreglo;
 
@@ -110,8 +107,6 @@ public class MagnitudDetalle implements Serializable {
 		this.metodoObservacion = metodoObservacion;
 		this.valor = valor;
 	}
-
-
 
 	public MagnitudDetalle(Integer idMagnitudDetalle) {
 		this.idMagnitudDetalle = idMagnitudDetalle;
@@ -187,6 +182,31 @@ public class MagnitudDetalle implements Serializable {
 
 	public void setMagnitudArreglo(MagnitudArreglo magnitudArreglo) {
 		this.magnitudArreglo = magnitudArreglo;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idMagnitudDetalle);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MagnitudDetalle other = (MagnitudDetalle) obj;
+		return Objects.equals(idMagnitudDetalle, other.idMagnitudDetalle);
+	}
+
+	@Override
+	public String toString() {
+		return "MagnitudDetalle [idMagnitudDetalle=" + idMagnitudDetalle + ", tipo=" + tipo + ", descripcion="
+				+ descripcion + ", distribucion=" + distribucion + ", evaluacionIncertidumbre="
+				+ evaluacionIncertidumbre + ", metodoObservacion=" + metodoObservacion + ", valor=" + valor
+				+ ", imagen=" + imagen + "]";
 	}
 
 }

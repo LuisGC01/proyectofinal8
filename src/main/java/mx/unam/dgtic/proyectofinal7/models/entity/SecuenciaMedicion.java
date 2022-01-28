@@ -2,10 +2,12 @@ package mx.unam.dgtic.proyectofinal7.models.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "secuencia_medicion")
@@ -40,8 +45,9 @@ public class SecuenciaMedicion implements Serializable {
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 
-	@OneToMany(mappedBy = "secuenciaMedicion")
-	private Set<SecuenciaDetalle> secuenciaDetalles;
+	@OneToMany(mappedBy = "secuenciaMedicion", fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
+	private List<SecuenciaDetalle> secuenciaDetalles;
 
 	public SecuenciaMedicion() {
 		// TODO Auto-generated constructor stub
@@ -77,7 +83,7 @@ public class SecuenciaMedicion implements Serializable {
 	}
 
 	public SecuenciaMedicion(Integer idSecuenciaMedicion, String titulo, String descripcion, LocalDateTime fecha,
-			Usuario usuario, Set<SecuenciaDetalle> secuenciaDetalles) {
+			Usuario usuario, List<SecuenciaDetalle> secuenciaDetalles) {
 		this.idSecuenciaMedicion = idSecuenciaMedicion;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
@@ -87,7 +93,7 @@ public class SecuenciaMedicion implements Serializable {
 	}
 
 	public SecuenciaMedicion(String titulo, String descripcion, LocalDateTime fecha, Usuario usuario,
-			Set<SecuenciaDetalle> secuenciaDetalles) {
+			List<SecuenciaDetalle> secuenciaDetalles) {
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
@@ -139,14 +145,36 @@ public class SecuenciaMedicion implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public Set<SecuenciaDetalle> getSecuenciaDetalles() {
+	public List<SecuenciaDetalle> getSecuenciaDetalles() {
 		return secuenciaDetalles;
 	}
 
-	public void setSecuenciaDetalles(Set<SecuenciaDetalle> secuenciaDetalles) {
+	public void setSecuenciaDetalles(List<SecuenciaDetalle> secuenciaDetalles) {
 		this.secuenciaDetalles = secuenciaDetalles;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(idSecuenciaMedicion);
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SecuenciaMedicion other = (SecuenciaMedicion) obj;
+		return Objects.equals(idSecuenciaMedicion, other.idSecuenciaMedicion);
+	}
+
+	@Override
+	public String toString() {
+		return "SecuenciaMedicion [idSecuenciaMedicion=" + idSecuenciaMedicion + ", titulo=" + titulo + ", descripcion="
+				+ descripcion + ", fecha=" + fecha + ", usuario=" + usuario + ", secuenciaDetalles=" + secuenciaDetalles
+				+ "]";
+	}
 
 }

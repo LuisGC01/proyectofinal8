@@ -1,9 +1,9 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
+import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,17 +38,17 @@ public class ModeloMatematico implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "id_arreglo_medicion")
-	//@Fetch(FetchMode.JOIN)
+	// @Fetch(FetchMode.JOIN)
 	@JsonIgnore
 	private ArregloMedicion arregloMedicion;
 
-	@OneToMany(mappedBy = "modeloMatematico")
-	//@Fetch(FetchMode.JOIN)
-	private Set<DerivadaModeloMatematico> derivadasModeloMatematico;
+	@OneToMany(mappedBy = "modeloMatematico", fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
+	private List<DerivadaModeloMatematico> derivadasModeloMatematico;
 
-	@OneToMany(mappedBy = "modeloMatematico")
-	//@Fetch(FetchMode.JOIN)
-	private Set<MagnitudArreglo> magnitudesArreglo;
+	@OneToMany(mappedBy = "modeloMatematico", fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
+	private List<MagnitudArreglo> magnitudesArreglo;
 
 	public ModeloMatematico() {
 		// TODO Auto-generated constructor stub
@@ -59,7 +59,7 @@ public class ModeloMatematico implements Serializable {
 	}
 
 	public ModeloMatematico(Integer idModeloMatematico, String ecuacion, ArregloMedicion arregloMedicion,
-			Set<DerivadaModeloMatematico> derivadasModeloMatematico, Set<MagnitudArreglo> magnitudesArreglo) {
+			List<DerivadaModeloMatematico> derivadasModeloMatematico, List<MagnitudArreglo> magnitudesArreglo) {
 		this.idModeloMatematico = idModeloMatematico;
 		this.ecuacion = ecuacion;
 		this.arregloMedicion = arregloMedicion;
@@ -68,7 +68,7 @@ public class ModeloMatematico implements Serializable {
 	}
 
 	public ModeloMatematico(String ecuacion, ArregloMedicion arregloMedicion,
-			Set<DerivadaModeloMatematico> derivadasModeloMatematico, Set<MagnitudArreglo> magnitudesArreglo) {
+			List<DerivadaModeloMatematico> derivadasModeloMatematico, List<MagnitudArreglo> magnitudesArreglo) {
 		this.ecuacion = ecuacion;
 		this.arregloMedicion = arregloMedicion;
 		this.derivadasModeloMatematico = derivadasModeloMatematico;
@@ -119,20 +119,44 @@ public class ModeloMatematico implements Serializable {
 		this.arregloMedicion = arregloMedicion;
 	}
 
-	public Set<DerivadaModeloMatematico> getDerivadasModeloMatematico() {
+	public List<DerivadaModeloMatematico> getDerivadasModeloMatematico() {
 		return derivadasModeloMatematico;
 	}
 
-	public void setDerivadasModeloMatematico(Set<DerivadaModeloMatematico> derivadasModeloMatematico) {
+	public void setDerivadasModeloMatematico(List<DerivadaModeloMatematico> derivadasModeloMatematico) {
 		this.derivadasModeloMatematico = derivadasModeloMatematico;
 	}
 
-	public Set<MagnitudArreglo> getMagnitudesArreglo() {
+	public List<MagnitudArreglo> getMagnitudesArreglo() {
 		return magnitudesArreglo;
 	}
 
-	public void setMagnitudesArreglo(Set<MagnitudArreglo> magnitudesArreglo) {
+	public void setMagnitudesArreglo(List<MagnitudArreglo> magnitudesArreglo) {
 		this.magnitudesArreglo = magnitudesArreglo;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idModeloMatematico);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ModeloMatematico other = (ModeloMatematico) obj;
+		return Objects.equals(idModeloMatematico, other.idModeloMatematico);
+	}
+
+	@Override
+	public String toString() {
+		return "ModeloMatematico [idModeloMatematico=" + idModeloMatematico + ", ecuacion=" + ecuacion
+				+ ", derivadasModeloMatematico=" + derivadasModeloMatematico + ", magnitudesArreglo="
+				+ magnitudesArreglo + "]";
 	}
 
 }

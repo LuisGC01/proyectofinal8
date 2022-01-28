@@ -1,5 +1,6 @@
 package mx.unam.dgtic.proyectofinal7.models.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import mx.unam.dgtic.proyectofinal7.models.entity.ArregloMedicion;
@@ -15,5 +16,7 @@ public interface IArregloService {
 	public abstract ArregloMedicion actualizarArreglo(ArregloMedicion entity);
 
 	public abstract void eliminarArregloPorId(Integer id);
+
+	public abstract List<ArregloMedicion> findByUsuario(Integer idUsuario);
 
 }

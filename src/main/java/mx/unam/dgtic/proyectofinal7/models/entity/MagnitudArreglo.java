@@ -1,12 +1,11 @@
 package mx.unam.dgtic.proyectofinal7.models.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -55,13 +51,13 @@ public class MagnitudArreglo implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "id_modelo_matematico")
-	//@Fetch(FetchMode.JOIN)
+	// @Fetch(FetchMode.JOIN)
 	@JsonIgnore
 	private ModeloMatematico modeloMatematico;
 
 	@OneToOne(mappedBy = "magnitudArreglo")
 	private MagnitudDetalle magnitudDetalle;
-	
+
 	@OneToMany(mappedBy = "magnitudArreglo")
 	private Set<SecuenciaDetalle> secuenciaDetalles;
 
@@ -213,6 +209,30 @@ public class MagnitudArreglo implements Serializable {
 
 	public void setMagnitudDetalle(MagnitudDetalle magnitudDetalle) {
 		this.magnitudDetalle = magnitudDetalle;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idMagnitudArreglo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MagnitudArreglo other = (MagnitudArreglo) obj;
+		return Objects.equals(idMagnitudArreglo, other.idMagnitudArreglo);
+	}
+
+	@Override
+	public String toString() {
+		return "MagnitudArreglo [idMagnitudArreglo=" + idMagnitudArreglo + ", magnitud=" + magnitud + ", unidad="
+				+ unidad + ", definicion=" + definicion + ", capturar=" + capturar + ", repetir=" + repetir
+				+ ", asociado=" + asociado + ", magnitudDetalle=" + magnitudDetalle + "]";
 	}
 
 }
