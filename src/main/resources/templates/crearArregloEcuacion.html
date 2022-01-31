@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h2>Creando nuevo arreglo de medicion</h2>
+
+	<form th:action="@{guardar}" th:object="${arreglo}" method="post">
+
+		<table>
+			<tr>
+				<td>Titulo</td>
+				<td><input type="text" th:field="*{titulo}"></td>
+			</tr>
+			<tr>
+				<td>Version</td>
+				<td><input type="text" th:field="*{version}"></td>
+			</tr>
+			<tr>
+				<td>Descripcion</td>
+				<td><input type="text" th:field="*{descripcion}"></td>
+			</tr>
+			<tr>
+				<td>Formato Cal-cert</td>
+				<td><input type="text" th:field="*{formatoCalCert}"></td>
+			</tr>
+			<tr>
+				<td>Imagen</td>
+				<td><input type="text" th:field="*{imagen.imagen}"></td>
+			</tr>
+			<tr>
+				<td>Leyenda de la imagen</td>
+				<td><input type="text" th:field="*{imagen.leyenda}"></td>
+			</tr>
+			<tr>
+				<td>Descripcion de la imagen</td>
+				<td><input type="text" th:field="*{imagen.descripcion}"></td>
+			</tr>
+			<tr>
+				<td>Ecuacion</td>
+				<td><textarea th:field="*{modeloMatematico.ecuacion}" disabled="disabled"></textarea></td>
+			</tr>
+
+			<tr>
+				<td colspan="2">
+					<button type="submit">Procesar Ecuacion</button>
+				</td>
+			</tr>
+
+		</table>
+
+
+	</form>
+
+
+</body>
+</html>

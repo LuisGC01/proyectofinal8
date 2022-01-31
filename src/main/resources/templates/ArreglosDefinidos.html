@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Arreglos de Medicion</h1>
+	<a th:href="@{crear/}">Crear Arreglo</a>
+	<table>
+		<thead>
+			<tr>
+				<th>N. Arreglo</th>
+				<th>Titulo</th>
+				<th>Fecha</th>
+				<th>Editar</th>
+				<th>Eliminar</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="a: ${arreglos}">
+				<td th:text="${a.idArregloMedicion}"></td>
+				<td th:text="${a.titulo}"></td>
+				<td th:text="${a.fecha}"></td>
+				<td><a th:href="@{editar/{id} (id=${a.idArregloMedicion})}">Editar</a></td>
+				<td><a th:href="@{eliminar/{id} (id=${a.idArregloMedicion})}">Eliminar</a></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
