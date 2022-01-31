@@ -42,7 +42,6 @@ public class ArregloController {
 		System.out.println(arreglo);
 		ModelAndView model = new ModelAndView("crearArregloEcuacion");
 		model.addObject("arreglo", arreglo);
-		
 		return model;
 	}
 	
