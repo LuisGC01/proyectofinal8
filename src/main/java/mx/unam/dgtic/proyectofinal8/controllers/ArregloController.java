@@ -41,7 +41,6 @@ public class ArregloController {
 	public ModelAndView ecuacionProcesada(@ModelAttribute("arreglo") ArregloMedicion arreglo) {
 		System.out.println(arreglo);
 		ModelAndView model = new ModelAndView("crearArregloEcuacion");
-		
 		model.addObject("arreglo", arreglo);
 		
 		return model;
